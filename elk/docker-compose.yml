@@ -56,13 +56,18 @@ services:
 
   logstash:
     image: logstash:7.4.2
+    command: logstash --config.reload.automatic
     environment:
-      - LOG_LEVEL=log.level
+      - LOG_LEVEL=debug
+      - XPACK_MONITORING_ENABLED=false
+#      - "LS_OPTS=--config.reload.automatic --config.reload.interval 3"
     volumes:
       # pipeline config
       - ./logstash/pipeline/:/usr/share/logstash/pipeline/
       # setting config
-      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+#      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      # 将处理数据挂载出来
+      - ./logstash/data/:/mnt/
     networks:
       - elk
     depends_on:
