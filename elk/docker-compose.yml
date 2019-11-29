@@ -35,7 +35,6 @@ services:
       - logstash
     links:
       - elasticsearch
-      - kibana
       - logstash
 
   kibana:
@@ -57,18 +56,18 @@ services:
 
   logstash:
     image: logstash:7.4.2
-#    volumes:
+    environment:
+      - LOG_LEVEL=log.level
+    volumes:
       # pipeline config
-#      - ./logstash/pipeline:/usr/share/logstash/pipeline/
+      - ./logstash/pipeline/:/usr/share/logstash/pipeline/
       # setting config
-#      - ./logstash/config:/usr/share/logstash/config/
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
     networks:
       - elk
     depends_on:
       - elasticsearch
-
     links:
-      - filebeat
       - elasticsearch
 
 volumes:

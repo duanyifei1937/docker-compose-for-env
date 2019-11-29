@@ -14,3 +14,9 @@ use docker-compose build dev and stage environment
 ### issue
 测试volume不支持local path: 
 - ./es_data:/usr/share/elasticsearch/data
+
+* links
+单向link
+
+* logstash xpack
+[2019-11-13T10:27:30,787][ERROR][logstash.licensechecker.licensereader] Unable to retrieve license information from license server {:message=>"No Available connections"}
