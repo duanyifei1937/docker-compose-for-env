@@ -53,6 +53,18 @@ services:
     links:
       - elasticsearch
 
+  logstash:
+    image: logstash:7.4.2
+#    volumes:
+      # pipeline config
+#      - ./logstash/pipeline:/usr/share/logstash/pipeline/
+      # setting config
+#      - ./logstash/config:/usr/share/logstash/config/
+    networks:
+      - elk
+    depends_on:
+      - filebeat
+
 volumes:
   es01:
     driver: local
