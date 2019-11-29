@@ -32,9 +32,11 @@ services:
       - elk
     depends_on:
       - elasticsearch
+      - logstash
     links:
-       - elasticsearch
-       - kibana
+      - elasticsearch
+      - kibana
+      - logstash
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.4.2
@@ -63,7 +65,11 @@ services:
     networks:
       - elk
     depends_on:
+      - elasticsearch
+
+    links:
       - filebeat
+      - elasticsearch
 
 volumes:
   es01:
