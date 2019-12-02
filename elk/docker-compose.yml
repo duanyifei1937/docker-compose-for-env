@@ -67,7 +67,7 @@ services:
       # setting config
 #      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       # 将处理数据挂载出来
-      - ./logstash/data/:/mnt/
+#      - ./logstash/data/:/usr/share/logstash/data/:rw
     networks:
       - elk
     depends_on:

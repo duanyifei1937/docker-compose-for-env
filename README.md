@@ -20,3 +20,9 @@ use docker-compose build dev and stage environment
 
 * logstash xpack
 [2019-11-13T10:27:30,787][ERROR][logstash.licensechecker.licensereader] Unable to retrieve license information from license server {:message=>"No Available connections"}
+
+
+
+* 匹配到panic 重定向到文件
+
+* 增加以下十行到文件
