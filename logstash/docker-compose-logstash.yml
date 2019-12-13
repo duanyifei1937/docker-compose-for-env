@@ -1,0 +1,15 @@
+version: '2.2'
+services:
+  logstash-dyf:
+    image: hub.pri.ibanyu.com/library/logstash:7.1.1
+    user: root
+    command: logstash --config.reload.automatic
+    environment:
+      - LOG_LEVEL=debug
+      - XPACK_MONITORING_ENABLED=false
+      - ES_JAVA_OPTS="-Xms4g -Xmx4g"
+
+    volumes:
+      # pipeline config
+      - ./pipeline/:/usr/share/logstash/pipeline/
+      - /data/test-logs/dyf/data/:/data/servicelog/wread0/

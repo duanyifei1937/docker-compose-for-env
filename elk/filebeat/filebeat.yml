@@ -6,6 +6,7 @@ filebeat.inputs:
 setup.template.name: "filebeat"
 setup.template.pattern: "filebeat-*"
 logging.level: debug
+
 #output.elasticsearch:
 #  hosts: ["http://elasticsearch:9200"]
 #  index: "filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"
