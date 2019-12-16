@@ -39,7 +39,7 @@ services:
     image: docker.elastic.co/kibana/kibana:7.4.2
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
-      - I18N_LOCALE=zh-CN
+#      - I18N_LOCALE=zh-CN
       - XPACK_GRAPH_ENABLED=true
       - TIMELION_ENABLED=true
       - XPACK_MONITORING_COLLECTION_ENABLED="true"
@@ -58,7 +58,7 @@ services:
     command: logstash --config.reload.automatic
     environment:
       - LOG_LEVEL=debug
-      - XPACK_MONITORING_ENABLED=false
+      - XPACK_MONITORING_ENABLED=true
     volumes:
       # pipeline config
       - ./logstash/pipeline/:/usr/share/logstash/pipeline/

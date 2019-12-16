@@ -1,2 +1,10 @@
 http.host: "0.0.0.0"
 xpack.monitoring.elasticsearch.hosts: [ "http://elasticsearch:9200" ]
+
+
+# The maximum number of events an individual worker thread will collect from inputs before attempting to execute its filters and outputs.
+#pipeline.workers: 2
+#pipeline.batch.size: 2500
+config.reload.automatic: true
+
+# logstash.instance * pipeline.worker * pipeline.batch.size * filebeat.pipelining(2) *  ~= filebeat.queue * 1/2

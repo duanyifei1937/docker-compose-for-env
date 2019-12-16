@@ -11,5 +11,24 @@ logging.level: debug
 #  hosts: ["http://elasticsearch:9200"]
 #  index: "filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"
 
+
+monitoring:
+  enabled: true
+  cluster_uuid: hLqVYfnjQv61f4ezzpaVLQ
+  elasticsearch:
+    hosts: ["http://elasticsearch:9200"]
+
+
 output.logstash:
   hosts: ["logstash:5044"]
+  # optimization:
+#  worker: 3
+#  pipelining: 4
+#  # The maximum number of events to bulk in a single Logstash request.
+#  bulk_max_size: 5000
+
+
+
+
+# bulk_max_size: 0 queue decides?
+
