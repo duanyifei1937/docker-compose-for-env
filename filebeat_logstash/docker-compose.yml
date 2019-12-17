@@ -1,0 +1,24 @@
+version: '2.2'
+services:
+  filebeat:
+    image: store/elastic/filebeat:7.4.2
+    command: filebeat -e -strict.perms=false
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./filebeat/sample_log:/usr/share/filebeat/logs/
+
+  logstash:
+    image: logstash:7.4.2
+    user: root
+    command: logstash --config.reload.automatic
+    environment:
+      - LOG_LEVEL=debug
+      - XPACK_MONITORING_ENABLED=false
+    volumes:
+      # pipeline config
+      - ./logstash/pipeline/:/usr/share/logstash/pipeline/
+      # setting config
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      # 将处理数据挂载出来
+      - ./logstash/data/:/usr/share/logstash/data/
+

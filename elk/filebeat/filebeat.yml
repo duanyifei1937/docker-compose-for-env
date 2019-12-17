@@ -12,11 +12,11 @@ logging.level: debug
 #  index: "filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"
 
 
-monitoring:
-  enabled: true
-  cluster_uuid: hLqVYfnjQv61f4ezzpaVLQ
-  elasticsearch:
-    hosts: ["http://elasticsearch:9200"]
+#monitoring:
+#  enabled: true
+#  cluster_uuid: hLqVYfnjQv61f4ezzpaVLQ
+#  elasticsearch:
+#    hosts: ["http://elasticsearch:9200"]
 
 
 output.logstash:
