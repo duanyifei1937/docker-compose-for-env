@@ -6,3 +6,7 @@ filebeat.inputs:
 output.elasticsearch:
   hosts: ["https://localhost:9200"]
   index: "filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"
+
+logging.metrics.enabled: true
+logging.metrics.period: 10s
+
