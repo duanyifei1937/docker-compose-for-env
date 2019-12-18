@@ -3,10 +3,11 @@ filebeat.inputs:
   paths:
     - /usr/share/filebeat/logs/*.log
 
-output.elasticsearch:
-  hosts: ["http://elasticsearch:9200"]
-
-logging.metrics.period: 30s
+logging.metrics.period: 10s
 logging.metrics.enabled: true
 http.enabled: true
 http.host: 0.0.0.0
+
+output.kafka:
+    hosts: ["10.111.131.207:9092","10.111.131.206:9092","10.111.131.205:9092"]
+    topic: 'dyf-test'
