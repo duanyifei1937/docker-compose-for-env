@@ -1,0 +1,8 @@
+filebeat.inputs:
+- type: log
+  paths:
+    - /usr/share/filebeat/logs/*.log
+
+output.elasticsearch:
+  hosts: ["https://localhost:9200"]
+  index: "filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"

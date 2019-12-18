@@ -2,6 +2,7 @@
 use docker-compose build dev and stage environment
 使用docker-compose启动测试服务环境，不依赖物理机；
 
+**项目存在重复代码，因为每次测试组件、参数不一致**
 
 ## ELK
 * docker-compose build elk stage env
