@@ -1,7 +1,21 @@
 filebeat.inputs:
 - type: log
   paths:
-    - /usr/share/filebeat/logs/*.log
+    - /usr/share/filebeat/logs/aaa.log
+  fields:
+    key: aaa
+
+- type: log
+  paths:
+    - /usr/share/filebeat/logs/bbb.log
+  fields:
+    key: bbb
+
+- type: log
+  paths:
+    - /usr/share/filebeat/logs/ccc.log
+  fields:
+    key: ccc
 
 logging.metrics.period: 10s
 logging.metrics.enabled: true
@@ -11,3 +25,4 @@ http.host: 0.0.0.0
 output.kafka:
     hosts: ["10.111.131.207:9092","10.111.131.206:9092","10.111.131.205:9092"]
     topic: 'dyf-test'
+    key: "%{key}"
