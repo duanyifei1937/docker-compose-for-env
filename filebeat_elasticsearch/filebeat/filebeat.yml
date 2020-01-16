@@ -6,7 +6,7 @@ filebeat.inputs:
 output.elasticsearch:
   hosts: ["http://elasticsearch:9200"]
 
-logging.metrics.period: 30s
+logging.metrics.period: 10s
 logging.metrics.enabled: true
 http.enabled: true
 http.host: 0.0.0.0
