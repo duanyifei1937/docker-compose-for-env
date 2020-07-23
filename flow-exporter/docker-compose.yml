@@ -1,0 +1,93 @@
+version: '3'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    restart: always
+    ports:
+      - "2181:2181"
+    networks:
+      - kafka-internal
+
+  kafka-manager:
+#    image: kafkamanager/kafka-manager:latest
+    image: sheepkiller/kafka-manager
+    container_name: kafka-manager
+    restart: always
+    depends_on:
+      - zookeeper
+    ports:
+      - "9000:9000"
+    environment:
+      ZK_HOSTS: "zookeeper:2181"
+    networks:
+      - kafka-internal
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    restart: always
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    networks:
+      - kafka
+      - kafka-internal
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:19092,OUTSIDE://192.168.136.17:9092
+      KAFKA_LISTENERS: INSIDE://:19092,OUTSIDE://:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_CREATE_TOPICS: "pmacct.acct:3:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LOG_RETENTION_HOURS: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  flow-exporter:
+    image: bswinnerton/flow-exporter:latest
+    container_name: flow-exporter
+    restart: always
+    command: --brokers=kafka:19092 --topic=pmacct.acct --asn=397143
+    expose:
+      - 9590
+    ports:
+      - "9590:9590"
+    networks:
+      - monitor
+      - kafka
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: always
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+    expose:
+      - 9090
+    ports:
+      - "9090:9090"
+    networks:
+      - monitor
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - data:/prometheus
+
+  node-exporter:
+    image: hub.pri.ibanyu.com/library/node-exporter:v0.17.0
+    network_mode: "host"
+    expose:
+      - 9100
+
+
+networks:
+  kafka-internal:
+  kafka:
+  monitor:
+
+volumes:
+  data:

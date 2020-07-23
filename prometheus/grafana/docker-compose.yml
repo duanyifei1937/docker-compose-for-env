@@ -1,0 +1,8 @@
+version: '2.2'
+services:
+  grafana:
+    image: grafana/grafana
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-worldmap-panel,yesoreyeram-boomtheme-panel
+    ports:
+      - 3000:3000

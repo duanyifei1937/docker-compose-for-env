@@ -1,0 +1,45 @@
+version: '2'
+services:
+  web:
+    image: line/promgen
+    ports:
+      - "8000:8000"
+    volumes:
+      - ~/.config/promgen:/etc/promgen/
+
+  worker:
+    image: line/promgen
+    volumes:
+      - ~/.config/promgen:/etc/promgen/
+      - /etc/prometheus:/etc/prometheus
+---
+version: '2'
+services:
+  prometheus:
+    image: prom/prometheus
+    user: root
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./docker:/etc/prometheus
+      - ./docker/prom_data:/prometheus
+      - /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  blackbox:
+    image: prom/blackbox-exporter
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./docker:/etc/prometheus
+
+  alertmanager:
+    image: hub.pri.ibanyu.com/library/alertmanager:latest
+    command: --config.file=/etc/prometheus/alertmanager.yml
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./docker:/etc/prometheus
+      - /etc/prometheus/alertmanager.yml:/etc/prometheus/alertmanager.yml
+
+---
+

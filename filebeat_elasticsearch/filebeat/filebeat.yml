@@ -2,11 +2,16 @@ filebeat.inputs:
 - type: log
   paths:
     - /usr/share/filebeat/logs/*.log
+  json.keys_under_root: true
 
 output.elasticsearch:
   hosts: ["http://elasticsearch:9200"]
+  index: "abc1"
 
 logging.metrics.period: 10s
 logging.metrics.enabled: true
 http.enabled: true
 http.host: 0.0.0.0
+setup.template.name: "abc1"
+setup.template.pattern: "abc1"
+setup.ilm.enabled: false

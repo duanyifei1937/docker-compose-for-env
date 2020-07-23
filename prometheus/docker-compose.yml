@@ -1,0 +1,28 @@
+version: '2.2'
+services:
+  prometheus:
+    image: prom/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.enable-lifecycle
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+#  pushgateway:
+#    image: prom/pushgateway
+#    ports:
+#      - 9091:9091
+  node-exporter:
+    image: hub.pri.ibanyu.com/library/node-exporter:v0.17.0
+    ports:
+      - 9100:9100
+
+#  process-exporter:
+#    image: ncabatoff/process-exporter
+#    command: -config.path /config/example.yml -procfs /host/proc
+#    volumes:
+#      - /proc:/host/proc
+#      - ./process-exporter/config/:/config
+#    ports:
+#      - 9256:9256

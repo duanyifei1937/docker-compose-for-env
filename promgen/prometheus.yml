@@ -1,0 +1,25 @@
+version: '2'
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./docker:/etc/prometheus
+      - ./docker/prom_data:/prometheus
+
+  blackbox:
+    image: prom/blackbox-exporter
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./docker:/etc/prometheus
+
+  alertmanager:
+    image: prom/alertmanager
+    command: --config.file=/etc/prometheus/alertmanager.yml
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./docker:/etc/prometheus
+

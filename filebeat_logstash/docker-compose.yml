@@ -21,4 +21,3 @@ services:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
       # 将处理数据挂载出来
       - ./logstash/data/:/usr/share/logstash/data/
-

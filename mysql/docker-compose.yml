@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: hub.pri.ibanyu.com/devops/mysql:5.7.25
+    command:
+    - --default-authentication-plugin=mysql_native_password
+    - --collation-server=utf8mb4_unicode_ci
+    - --character-set-server=utf8mb4
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+    - 3306:3306
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

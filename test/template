@@ -1,0 +1,57 @@
+input {
+  kafka {
+    bootstrap_servers => "10.111.203.77:9092,10.111.203.78:9092,10.111.203.94:9092"
+    client_id => "{{ ansible_hostname }}"
+    group_id => "wl-logstash"
+    auto_offset_reset => "earliest"
+    consumer_threads => 4
+    topics_pattern => "beat-.*"
+    codec => json
+  }
+}
+
+filter {
+    mutate {
+      remove_field => [ "offset","docker_container","beat","prospector","stream","source","host","@version" ]
+    }
+    if (
+        ("HealthCheck" in [message])
+        or ("distLockHeart.loop" in [message])
+        or ("ClientEtcdV2.watch" in [message])
+        or ("ClientEtcdV2.startWatch" in [message])
+        or ("TRAFFIC" in [message])
+        or ("Hash.Route" in [message])
+        or ("</xml>" in [message] and "body:<xml>" not in [message])
+        or ("err:<nil>" in [message] and "data: err:<nil>" not in [message])
+    ) {
+        drop { }
+    }
+    grok {
+      patterns_dir => ["/usr/share/logstash/patterns"]
+      patterns_files_glob => "*.patterns"
+      match => {"message" => [
+                "%{CUSTOMDATE:logdate}",
+                "%{HTTPDATE:logdate}"
+                ]
+      }
+    }
+    date {
+      match => ['logdate', 'dd/MMM/YYYY:HH:mm:ss Z','YYYY/MM/dd HH:mm:ss.SSSSSS']
+      timezone => "+08:00"
+      locale => "en"
+      target => "@timestamp"
+    }
+}
+
+output {
+	elasticsearch {
+		hosts => ["10.106.12.24:9200","10.106.12.25:9200","10.106.12.26:9200","10.106.12.27:9200","10.106.12.28:9200","10.106.8.161:9200","10.106.8.162:9200","10.106.8.163:9200","10.106.12.24:9201","10.106.12.25:9201","10.106.12.26:9201","10.106.12.27:9201","10.106.12.28:9201","10.106.8.161:9201","10.106.8.162:9201","10.106.8.163:9201"]
+		index => "%{service}-%{+YYYY.MM.dd}"
+	  }
+	file {
+	  path => "/data/backup/%{+YYYY}/%{+MM}/%{+dd}/%{service}-{{ groups['logstash'].index(inventory_hostname) }}.log"
+	  codec => line {
+	    format => "%{message}"
+	  }
+	}
+}

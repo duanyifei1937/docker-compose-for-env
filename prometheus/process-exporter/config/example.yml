@@ -1,0 +1,36 @@
+process_names:
+  - name: "{{.Comm}}"
+    cmdline:
+    - '.+'
+#
+##  - name: "{{.ExeBase}}"
+##    cmdline:
+##    - '.+'
+#
+#
+#  - name: "{{.ExeFull}}"
+#    cmdline:
+#    - '.+'
+
+
+#process_names:
+#  - comm:
+#    - chromium-browse
+#    - bash
+#    - prometheus
+#    - gvim
+#  - exe:
+#    - /sbin/upstart
+#    cmdline:
+#    - --user
+#    name: upstart:-user
+
+
+## match:
+#process_names:
+#  - name: "{{.Matches}}"
+#    cmdline:
+#    - '/etc/logstash'
+#  - name: "{{.Comm}}"
+#    cmdline:
+#    - '.+'
