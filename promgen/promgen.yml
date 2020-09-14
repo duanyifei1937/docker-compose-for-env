@@ -33,7 +33,7 @@ services:
       - ./docker:/etc/prometheus
 
   alertmanager:
-    image: hub.pri.ibanyu.com/library/alertmanager:latest
+    image: hub.harbor.com/library/alertmanager:latest
     command: --config.file=/etc/prometheus/alertmanager.yml
     ports:
       - "9093:9093"

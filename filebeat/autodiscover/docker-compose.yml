@@ -1,0 +1,11 @@
+version: '2.2'
+services:
+  filebeat:
+    image: hub.harbor.com/devops/filebeat:7.3.2
+    command: filebeat -e -strict.perms=false
+    user: root
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      #- /data/data/docker/containers/02798e2e6738e01cdeecf6d08f77ea1ad030b570cb8bbdc777116d1ddceed798/:/usr/share/filebeat/logs/
+      - /data/data/docker/containers/:/usr/share/filebeat/logs/
+      - /var/run/docker.sock:/var/run/docker.sock

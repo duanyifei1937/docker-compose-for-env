@@ -78,7 +78,7 @@ services:
       - data:/prometheus
 
   node-exporter:
-    image: hub.pri.ibanyu.com/library/node-exporter:v0.17.0
+    image: hub.harbor.com/library/node-exporter:v0.17.0
     network_mode: "host"
     expose:
       - 9100

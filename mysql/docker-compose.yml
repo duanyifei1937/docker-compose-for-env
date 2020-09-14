@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   db:
-    image: hub.pri.ibanyu.com/devops/mysql:5.7.25
+    image: hub.harbor.com/devops/mysql:5.7.25
     command:
     - --default-authentication-plugin=mysql_native_password
     - --collation-server=utf8mb4_unicode_ci
